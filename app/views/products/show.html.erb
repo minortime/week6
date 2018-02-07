@@ -5,7 +5,7 @@
 <table class="w3-table-all">
 <thead>
   <tr>
-    <th><h1>product</h1></th>
+    <th><h1>Product Details</h1></th>
     <th></th>
   </tr>
 </thead>
@@ -24,7 +24,7 @@
   <strong>Description:</strong>
 </td>
 <td>
-  <%= @product.description %>
+  <%= sanitize(strip_tags(@product.description)) %>
 </td>
 </tr>
 
@@ -32,7 +32,7 @@
   <strong>Image url:</strong>
 </td>
 <td>
-  <%= @product.image_url %>
+  <%= image_tag(@product.image_url) %>    
 </td>
 </tr>
 
@@ -40,17 +40,17 @@
   <strong>Price:</strong>
 </td>
 <td>
-  <%= @product.price %>
+  <%= number_to_currency(@product.price) %>    
 </td>
 </tr>
 
 
 <tr>
 <td>
-<%= link_to 'Edit', edit_product_path(@product) ,class:"w3-button w3-light-gray" %> 
+<%= link_to 'Edit', edit_product_path(@product) ,class:"w3-button w3-light-gray w3-border" %> 
 </td>
 <td>
-  <%= link_to 'Back', products_path , class:"w3-button w3-light-gray" %>
+  <%= link_to 'Back', products_path , class:"w3-button w3-light-gray w3-border" %>
 </td>
 </tr>
 </tbody>

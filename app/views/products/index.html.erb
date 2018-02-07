@@ -16,13 +16,13 @@
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= product.title %></td>
-        <td><%= product.description %></td>
-        <td><%= product.image_url %></td>
-        <td><%= product.price %></td>
-        <td><%= link_to 'Show', product , class:"w3-button w3-light-gray" %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) , class:"w3-button w3-light-gray" %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } , class:"w3-button w3-light-gray" %></td>
+        <td><h4><%= sanitize(product.title) %></h4></td>
+        <td width="50%"><%= sanitize(strip_tags(product.description)) %></td>
+        <td><%= image_tag(product.image_url) %></td>
+        <td><%= number_to_currency(product.price) %></td>
+        <td><%= link_to 'Show', product , class:"w3-button w3-light-gray w3-border" %></td>
+        <td><%= link_to 'Edit', edit_product_path(product) , class:"w3-button w3-light-gray w3-border" %></td>
+        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure? Really, really sure?' } , class:"w3-button w3-light-gray w3-border" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Product', new_product_path , class:"w3-button w3-light-gray" %>
+<%= link_to 'New Product', new_product_path , class:"w3-button w3-light-gray w3-border" %>

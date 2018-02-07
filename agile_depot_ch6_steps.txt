@@ -1,0 +1,80 @@
+Agile Development Depot Application
+
+
+Chapter 6 - Iteration A -Initial Pretty Catalog Display
+
+code> rails new depot
+
+code> cd depot
+
+depot> rails generate scaffold Product title:string description:text image_url:string price:decimal
+
+note:text has modifying migration to add to price: t.decimal :price, precision: 8, scale: 2
+
+depot> rake db:migrate
+
+depot> rails server (use command specific to your environment e.g. rails s -b 0.0.0.0 for nitrous...)
+
+view app preview at localhost:3000/products which will show products index page...
+
+no data yet, and form shows limited space for the description
+text suggests modifying the field specification for description in _form.html.erb template tohave 6 lines
+<%= f.text_area :description, rows: 6 %>
+
+Now add at least one product; example used is like:
+Title: CoffeeScript
+Description: <p>...javascript done right... </p>
+Image_url: cs.jpg
+Price: 36.00
+
+when done adding, control+c to stop server
+
+now, test:
+
+depot> rake test
+
+text discusses need for common test data; place in the ..depot/db/seeds.rb file
+recommends downloading this file and also getting other asset files, like the images and loading
+then install sample seed data
+
+depot> rake db:seed
+
+text goes on to additional 'prettify' or 'make pretty' steps
+download and install css for products
+verify that the application template file will accommodate this
+change to alternate catalog display with a 'bespoke' page
+
+experiments:
+
+depot> rake db:rollback
+
+-if successful will need to rerun migration and seeding to get back the database
+
+
+git commands:
+
+depot> git config --global --add user.name "your_git_username"
+depot> git config --global --add user.email "your_git_email"
+
+if you use --update you reconfig these local globals for github
+
+view git config with
+
+depot> git config --global --list
+
+then, config a repository and commit
+
+depot> git init
+depot> git add .
+depot> git commit -a "some labeling info"
+
+return if you want using
+
+depot> git checkout .
+
+
+
+
+
+
+

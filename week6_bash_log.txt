@@ -1,0 +1,646 @@
+Last login: Mon Feb  5 16:31:34 2018 from 52.161.27.120
+cabox@box-codeanywhere:~/workspace$ git clone https://github.com/jdebettencourt/it231-w3css-scaffold.git depot
+Cloning into 'depot'...
+remote: Counting objects: 266, done.
+remote: Compressing objects: 100% (141/141), done.
+remote: Total 266 (delta 90), reused 266 (delta 90), pack-reused 0
+Receiving objects: 100% (266/266), 109.40 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (90/90), done.
+Checking connectivity... done.
+cabox@box-codeanywhere:~/workspace$ cd depot
+cabox@box-codeanywhere:~/workspace/depot$ ruby --version && rails --version && rvm --version && heroku --version
+ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-linux]
+Could not find proper version of railties (5.0.6) in any of the sources
+Run `bundle install` to install missing gems.
+cabox@box-codeanywhere:~/workspace/depot$ rvm
+= rvm
+
+* https://rvm.io/
+* https://github.com/wayneeseguin/rvm/
+
+== DESCRIPTION:
+
+RVM is the Ruby enVironment Manager (rvm).
+
+It manages Ruby application environments and enables switching between them.
+
+== Installation
+
+  curl -L https://get.rvm.io | bash -s stable --autolibs=enabled [--ruby] [--rails] [--trace]
+
+stable     :: Install stable RVM, good for servers.
+--ruby     :: Additionally install latest ruby version (MRI).
+--rails    :: Install gem rails into default gemset (also installs ruby=).
+--trace    :: Print trace of the installation, gist output when you have problems.
+--autolibs :: Enable or disable autolibs see: https://rvm.io/rvm/autolibs
+
+More details here: https://rvm.io/rvm/install/
+
+== Usage
+
+  rvm [Flags] [Options] Action [Implementation[,Implementation[,...]]
+
+== Flags
+
+--default         :: with 'rvm use X', sets the default ruby for new shells to X.
+--debug           :: Toggle debug mode on for very verbose output.
+--disable-binary  :: Install from source instead of using binaries
+--trace           :: Toggle trace mode on to see EVERYTHING rvm is doing.
+--force           :: Force install, removes old install & source before install.
+--summary         :: Used with rubydo to print out a summary of the commands run.
+--latest          :: with gemset --dump skips version strings for latest gem.
+--gems            :: with uninstall/remove removes gems with the interpreter.
+--docs            :: with install, attempt to generate ri after installation.
+--reconfigure     :: Force ./configure on install even if Makefile already exists.
+--skip-gemsets    :: with install, skip the installation of default gemsets.
+--quiet-curl      :: Makes curl silent when fetching data
+
+== Options
+
+-v|--version     :: Emit rvm version loaded for current shell
+-l|--level       :: patch level to use with rvm use / install
+   --bin         :: path for binaries to be placed (~/.rvm/bin/)
+-S               :: Specify a script file to attempt to load and run (rubydo)
+-e               :: Execute code from the command line.
+--gems           :: Used to set the 'gems_flag', use with 'remove' to remove
+                    gems
+--archive        :: Used to set the 'archive_flag', use with 'remove' to remove
+                    archive
+--patch          :: With MRI Rubies you may specify one or more full paths to
+                    patches
+
+                    for multiple, specify comma separated:
+
+                      --patch /.../.../a.patch[%prefix],/.../.../.../b.patch
+
+                    'prefix' is an optional argument, which will be bypassed
+                    to the '-p' argument of the 'patch' command. It is separated
+                    from patch file name with '%' symbol.
+-C|--configure   :: custom configure options. If you need to pass several
+                    configure options then append them comma separated:
+
+                      -C --...,--...,--...
+
+--nice           :: process niceness (for slow computers, default 0)
+--ree-options    :: Options passed directly to ree's './installer' on the
+                    command line.
+--with-rubies    :: Specifies a string for rvm to attempt to expand for set
+                    operations.
+
+== Action
+
+(Note: for most actions, 'rvm help action-name' may provide more information.)
+
+*usage*     :: show this usage information
+version     :: show the rvm version installed in rvm_path
+use         :: setup current shell to use a specific ruby version
+reload      :: reload rvm source itself (useful after changing rvm source)
+implode     :: (seppuku) removes the rvm installation completely.
+
+               This means everything in $rvm_path (~/.rvm || /usr/local/rvm).
+
+               This does not touch your profiles. However, this means that you
+               must manually clean up your profiles and remove the lines which
+               source RVM.
+get         :: {head,stable} upgrades rvm to latest head or stable version.
+
+               Check 'rvm help get' for more details.
+
+               (If you experience bugs try this first with head version, then
+               ask for help in #rvm on irc.freenode.net and hang around)
+reset       :: remove current and stored default & system settings.
+
+               (If you experience odd behavior try this second)
+info        :: show the *current* environment information for current ruby
+current     :: print the *current* ruby version and the name of any gemset
+               being used.
+debug       :: show info plus additional information for common issues
+
+install     :: install one or many ruby versions
+
+               See also: https://rvm.io/rubies/installing/
+uninstall   :: uninstall one or many ruby versions, leaves their sources
+remove      :: uninstall one or many ruby versions and remove their sources
+reinstall   :: reinstall ruby and runs gem pristine on all gems,
+               make sure to read output, use 'all' for all rubies.
+
+migrate     :: Lets you migrate all gemsets from one ruby to another.
+upgrade     :: Lets you upgrade from one version of a ruby to another, including
+               migrating your gemsets semi-automatically.
+
+wrapper     :: generates a set of wrapper executables for a given ruby with the
+               specified ruby and gemset combination. Used under the hood for
+               passenger support and the like.
+
+cleanup     :: Lets you remove stale source folders / archives and other
+               miscellaneous data associated with rvm.
+repair      :: Lets you repair parts of your environment e.g. wrappers, env
+               files and and similar files (e.g. general maintenance).
+fix-permissions :: Repairs broken permissions (e.g. by sudo or chef)
+osx-ssl-certs :: Helps update certificates for OpenSSL installed by rvm on OSX.
+snapshot    :: Lets you backup / restore an rvm installation in a lightweight
+               manner.
+
+alias       :: Lets you set shortcut strings for convenience with 'rvm use'.
+disk-usage  :: Tells you how much disk space rvm install is using.
+tools       :: Provides general information about the ruby environment,
+               primarily useful when scripting rvm.
+docs        :: Tools to make installing ri and rdoc documentation easier.
+rvmrc       :: Tools related to managing rvmrc trust and loading.
+patchset    :: Tools related to managing ruby patchsets.
+
+do          :: runs an arbitrary command against specified and/or all rubies
+cron        :: Manages setup for using ruby in cron tasks.
+
+gemset      :: gemsets: https://rvm.io/gemsets/
+
+rubygems    :: Switches the installed version of rubygems for the current ruby.
+
+config-get  :: display values for RbConfig::CONFIG variables.
+gemdir      :: display the path to the current gem directory (GEM_HOME).
+
+
+fetch       :: Performs an archive / src fetch only of the selected ruby.
+list        :: show currently installed rubies, interactive output.
+
+               https://rvm.io/rubies/list/
+autolibs    :: Controls settings for automatically installing dependencies.
+pkg         :: Install a dependency package {readline,iconv,zlib,openssl}
+
+               https://rvm.io/packages/
+notes       :: Display notes, with operating system specifics.
+
+export      :: Temporarily set an environment variable in the current shell.
+unexport    :: Undo changes made to the environment by 'rvm export'.
+requirements  :: Installs additional OS specific dependencies/requirements for
+                 building various rubies. Usually run by install.
+mount       :: Install rubies from external locations.
+
+user        :: Tools for managing RVM mixed mode in multiuser installations.
+group       :: Tools for managing groups in multiuser installations.
+
+== Implementation
+
+*ruby*     :: MRI/YARV Ruby (The Gold Standard) {1.8.x, 1.9.x, 2.0.x, 2.1.x}
+jruby      :: JRuby, Ruby interpreter on the Java Virtual Machine.
+rbx        :: Rubinius
+ree        :: Ruby Enterprise Edition, MRI Ruby with several custom
+              patches for performance, stability, and memory.
+macruby    :: MacRuby, insanely fast, can make real apps (Mac OS X Only).
+maglev     :: GemStone Ruby, awesome persistent ruby object store.
+ironruby   :: IronRuby, NOT supported yet. Looking for volunteers to help.
+system     :: use the system ruby (eg. pre-rvm state)
+default    :: use the default ruby (or the system ruby if a default hasn't been set).
+
+              https://rvm.io/rubies/default/
+
+== Resources:
+
+https://rvm.io/
+https://www.pivotaltracker.com/projects/26822
+
+== Contributions:
+
+Any and all contributions offered in any form, past present or future, to the
+RVM project are understood to be in complete agreement and acceptance with the
+Apache License v2.0.
+
+== LICENSE:
+
+Copyright (c) 2009-2011 Wayne E. Seguin
+Copyright (c) 2011-2014 Michal Papis
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+  Action documentation available with 'rvm help action-name':
+
+      alias autolibs cleanup config-get cron current debug disk-usage do docs fetch fix-permissions gemdir gemset get group implode info install list migrate mount notes osx-ssl-certs patchset pkg prepare reinstall remove repair requirementsreset rubygems rvmrc rvmrc/to rvmrc/warning snapshot srcdir tools uninstall upgrade use user wrapper
+
+  Other topics of documentation available with 'rvm help topic':
+
+      alt color upgrade-notes
+
+
+  For additional information please visit RVM's documentation website:
+
+      https://rvm.io/
+
+  If you still cannot find an answer to your question, find
+  'wayneeseguin', 'mpapis', 'richo', 'lemoinem' or 'rys' in #rvm on irc.freenode.net:
+
+      http://webchat.freenode.net/?channels=rvm
+
+cabox@box-codeanywhere:~/workspace/depot$ rvm default 2.5.0
+cabox@box-codeanywhere:~/workspace/depot$ ruby --version && rails --version && rvm --version && heroku --version
+ruby 2.5.0p0 (2017-12-25 revision 61468) [x86_64-linux]
+Rails 5.0.6
+rvm 1.25.30 (master) by Wayne E. Seguin <wayneeseguin@gmail.com>, Michal Papis <mpapis@gmail.com> [https://rvm.io/]
+-bash: heroku: command not found
+cabox@box-codeanywhere:~/workspace/depot$ bundle install --without production
+The dependency tzinfo-data (>= 0) will be unused by any of the platforms Bundler is installing for. Bundler is installing for ruby but the dependency is only for x86-mingw32, x86-mswin32, x64-mingw32, java. To add those platforms to the bundle, run `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`.
+Fetching gem metadata from https://rubygems.org/..........
+Fetching gem metadata from https://rubygems.org/.
+Resolving dependencies...
+Using rake 12.1.0
+Using concurrent-ruby 1.0.5
+Using i18n 0.8.6
+Using minitest 5.10.3
+Using thread_safe 0.3.6
+Using tzinfo 1.2.3
+Using activesupport 5.0.6
+Using builder 3.2.3
+Using erubis 2.7.0
+Using mini_portile2 2.3.0
+Using nokogiri 1.8.1
+Using rails-dom-testing 2.0.3
+Using crass 1.0.2
+Using loofah 2.1.1
+Using rails-html-sanitizer 1.0.3
+Using actionview 5.0.6
+Using rack 2.0.3
+Using rack-test 0.6.3
+Using actionpack 5.0.6
+Using nio4r 2.1.0
+Using websocket-extensions 0.1.2
+Using websocket-driver 0.6.5
+Using actioncable 5.0.6
+Using globalid 0.4.0
+Using activejob 5.0.6
+Using mime-types-data 3.2016.0521
+Using mime-types 3.1
+Using mail 2.6.6
+Using actionmailer 5.0.6
+Using activemodel 5.0.6
+Using arel 7.1.4
+Using activerecord 5.0.6
+Using bindex 0.5.0
+Using bundler 1.16.1
+Using byebug 9.1.0
+Using coffee-script-source 1.12.2
+Using execjs 2.7.0
+Using coffee-script 2.4.1
+Using method_source 0.9.0
+Using thor 0.20.0
+Using railties 5.0.6
+Using coffee-rails 4.2.2
+Using ffi 1.9.18
+Using multi_json 1.12.2
+Using jbuilder 2.7.0
+Using jquery-rails 4.3.1
+Using rb-fsevent 0.10.2
+Using rb-inotify 0.9.10
+Using listen 3.0.8
+Using puma 3.10.0
+Using sprockets 3.7.1
+Using sprockets-rails 3.2.1
+Using rails 5.0.6
+Using sass-listen 4.0.0
+Using sass 3.5.2
+Using tilt 2.0.8
+Using sass-rails 5.0.6
+Using spring 2.0.2
+Using spring-watcher-listen 2.0.1
+Using sqlite3 1.3.13
+Using turbolinks-source 5.0.3
+Using turbolinks 5.0.1
+Using uglifier 3.2.0
+Using web-console 3.5.1
+Bundle complete! 16 Gemfile dependencies, 64 gems now installed.
+Gems in the group production were not installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+cabox@box-codeanywhere:~/workspace/depot$
+cabox@box-codeanywhere:~/workspace/depot$ rails s -b 0.0.0.0 -p 3000
+=> Booting Puma
+=> Rails 5.0.6 application starting in development on http://0.0.0.0:3000
+=> Run `rails server -h` for more startup options
+Puma starting in single mode...
+* Version 3.10.0 (ruby 2.5.0-p0), codename: Russell's Teapot
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://0.0.0.0:3000
+Use Ctrl-C to stop
+Started GET "/" for 140.192.248.2 at 2018-02-07 15:44:59 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StaticPagesController#home as HTML
+  Rendering static_pages/home.html.erb within layouts/application
+  Rendered static_pages/home.html.erb within layouts/application (4.1ms)
+Completed 200 OK in 1329ms (Views: 1307.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/static_pages/home" for 140.192.248.2 at 2018-02-07 15:45:08 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StaticPagesController#home as HTML
+  Rendering static_pages/home.html.erb within layouts/application
+  Rendered static_pages/home.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 32ms (Views: 30.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 15:45:09 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StaticPagesController#home as HTML
+  Rendering static_pages/home.html.erb within layouts/application
+  Rendered static_pages/home.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 31ms (Views: 29.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/static_pages/help" for 140.192.248.2 at 2018-02-07 15:45:11 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StaticPagesController#help as HTML
+  Rendering static_pages/help.html.erb within layouts/application
+  Rendered static_pages/help.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 30ms (Views: 28.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/static_pages/about" for 140.192.248.2 at 2018-02-07 15:45:12 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StaticPagesController#about as HTML
+  Rendering static_pages/about.html.erb within layouts/application
+  Rendered static_pages/about.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 34ms (Views: 32.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 15:45:13 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StaticPagesController#home as HTML
+  Rendering static_pages/home.html.erb within layouts/application
+  Rendered static_pages/home.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 50ms (Views: 48.9ms | ActiveRecord: 0.0ms)
+
+
+^C- Gracefully stopping, waiting for requests to finish
+=== puma shutdown: 2018-02-07 15:45:38 -0500 ===
+- Goodbye!
+Exiting
+cabox@box-codeanywhere:~/workspace/depot$ rails generate scaffold Product title:string description:text image_url:stringprice:decimal
+Running via Spring preloader in process 1202
+      invoke  active_record
+      create    db/migrate/20180207204714_create_products.rb
+      create    app/models/product.rb
+      invoke    test_unit
+      create      test/models/product_test.rb
+      create      test/fixtures/products.yml
+      invoke  resource_route
+       route    resources :products
+      invoke  scaffold_controller
+      create    app/controllers/products_controller.rb
+      invoke    erb
+      create      app/views/products
+      create      app/views/products/index.html.erb
+      create      app/views/products/edit.html.erb
+      create      app/views/products/show.html.erb
+      create      app/views/products/new.html.erb
+      create      app/views/products/_form.html.erb
+      invoke    test_unit
+      create      test/controllers/products_controller_test.rb
+      invoke    helper
+      create      app/helpers/products_helper.rb
+      invoke      test_unit
+      invoke    jbuilder
+      create      app/views/products/index.json.jbuilder
+      create      app/views/products/show.json.jbuilder
+      create      app/views/products/_product.json.jbuilder
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/products.coffee
+      invoke    scss
+      create      app/assets/stylesheets/products.scss
+      invoke  scss
+   identical    app/assets/stylesheets/scaffolds.scss
+cabox@box-codeanywhere:~/workspace/depot$ rails generate controller Store index
+Running via Spring preloader in process 1210
+      create  app/controllers/store_controller.rb
+       route  get 'store/index'
+      invoke  erb
+      create    app/views/store
+      create    app/views/store/index.html.erb
+      invoke  test_unit
+      create    test/controllers/store_controller_test.rb
+      invoke  helper
+      create    app/helpers/store_helper.rb
+      invoke    test_unit
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/store.coffee
+      invoke    scss
+      create      app/assets/stylesheets/store.scss
+cabox@box-codeanywhere:~/workspace/depot$ rails db:migrate
+== 20180207204714 CreateProducts: migrating ===================================
+-- create_table(:products)
+   -> 0.0027s
+== 20180207204714 CreateProducts: migrated (0.0028s) ==========================
+
+cabox@box-codeanywhere:~/workspace/depot$ rails db:seed
+cabox@box-codeanywhere:~/workspace/depot$ rails s -b 0.0.0.0 -p 3000=> Booting Puma
+=> Rails 5.0.6 application starting in development on http://0.0.0.0:3000
+=> Run `rails server -h` for more startup options
+Puma starting in single mode...
+* Version 3.10.0 (ruby 2.5.0-p0), codename: Russell's Teapot
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://0.0.0.0:3000
+Use Ctrl-C to stop
+Started GET "/" for 140.192.248.2 at 2018-02-07 15:58:51 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+  ActiveRecord::SchemaMigration Load (1.4ms)  SELECT "schema_migrations".* FROM "schema_migrations"
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Rendered store/index.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 607ms (Views: 588.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 15:58:57 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Rendered store/index.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 37ms (Views: 35.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/static_pages/home" for 140.192.248.2 at 2018-02-07 15:58:59 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StaticPagesController#home as HTML
+  Rendering static_pages/home.html.erb within layouts/application
+  Rendered static_pages/home.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 42ms (Views: 38.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 15:59:00 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Rendered store/index.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 44ms (Views: 42.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/products" for 140.192.248.2 at 2018-02-07 15:59:13 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by ProductsController#index as HTML
+  Rendering products/index.html.erb within layouts/application
+  Product Load (0.4ms)  SELECT "products".* FROM "products"
+  Rendered products/index.html.erb within layouts/application (16.6ms)
+Completed 200 OK in 82ms (Views: 78.9ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 15:59:35 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Rendered store/index.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 58ms (Views: 56.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/static_pages/home" for 140.192.248.2 at 2018-02-07 16:00:48 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StaticPagesController#home as HTML
+  Rendering static_pages/home.html.erb within layouts/application
+  Rendered static_pages/home.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 44ms (Views: 42.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:00:51 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.5ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 43ms (Views: 41.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:15:56 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Rendered store/index.html.erb within layouts/application (1.7ms)
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.0ms)
+
+
+
+SyntaxError (/home/cabox/workspace/depot/app/views/store/index.html.erb:23: syntax error, unexpected '<'
+        <td></td>
+        ^
+/home/cabox/workspace/depot/app/views/store/index.html.erb:24: unknown regexp options - td
+/home/cabox/workspace/depot/app/views/store/index.html.erb:25: syntax error, unexpected '<'
+      </tr>
+      ^
+/home/cabox/workspace/depot/app/views/store/index.html.erb:27: unknown regexp options - tbdy
+/home/cabox/workspace/depot/app/views/store/index.html.erb:28: syntax error, unexpected '<'
+</table>
+^
+/home/cabox/workspace/depot/app/views/store/index.html.erb:33: unterminated regexp meets end of file
+          end
+             ^
+/home/cabox/workspace/depot/app/views/store/index.html.erb:33: syntax error, unexpected end-of-input, expecting ')'
+          end
+             ^):
+
+app/views/store/index.html.erb:23: syntax error, unexpected '<'
+app/views/store/index.html.erb:24: unknown regexp options - td
+app/views/store/index.html.erb:25: syntax error, unexpected '<'
+app/views/store/index.html.erb:27: unknown regexp options - tbdy
+app/views/store/index.html.erb:28: syntax error, unexpected '<'
+app/views/store/index.html.erb:33: unterminated regexp meets end of file
+app/views/store/index.html.erb:33: syntax error, unexpected end-of-input, expecting ')'
+  Rendering /home/cabox/.rvm/gems/ruby-2.5.0/gems/actionpack-5.0.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /home/cabox/.rvm/gems/ruby-2.5.0/gems/actionpack-5.0.6/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /home/cabox/.rvm/gems/ruby-2.5.0/gems/actionpack-5.0.6/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (6.8ms)
+  Rendering /home/cabox/.rvm/gems/ruby-2.5.0/gems/actionpack-5.0.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /home/cabox/.rvm/gems/ruby-2.5.0/gems/actionpack-5.0.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.9ms)
+  Rendering /home/cabox/.rvm/gems/ruby-2.5.0/gems/actionpack-5.0.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /home/cabox/.rvm/gems/ruby-2.5.0/gems/actionpack-5.0.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /home/cabox/.rvm/gems/ruby-2.5.0/gems/actionpack-5.0.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (52.5ms)
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:19:09 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.6ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (56.8ms)
+Completed 200 OK in 97ms (Views: 94.4ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:20:16 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.3ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (38.7ms)
+Completed 200 OK in 77ms (Views: 75.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:23:22 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.4ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (12.3ms)
+Completed 200 OK in 59ms (Views: 57.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:27:06 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.3ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (12.8ms)
+Completed 200 OK in 62ms (Views: 59.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:28:43 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.5ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (15.9ms)
+Completed 200 OK in 67ms (Views: 65.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:29:10 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.3ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (12.9ms)
+Completed 200 OK in 63ms (Views: 61.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:29:49 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.3ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (11.6ms)
+Completed 200 OK in 52ms (Views: 49.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:31:52 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.3ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (12.5ms)
+Completed 200 OK in 61ms (Views: 52.0ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 140.192.248.2 at 2018-02-07 16:35:05 -0500
+Cannot render console from 140.192.248.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by StoreController#index as HTML
+  Rendering store/index.html.erb within layouts/application
+  Product Load (0.3ms)  SELECT "products".* FROM "products" ORDER BY "products"."title" ASC
+  Rendered store/index.html.erb within layouts/application (14.3ms)
+Completed 200 OK in 56ms (Views: 53.7ms | ActiveRecord: 0.3ms)
+
+
+^C- Gracefully stopping, waiting for requests to finish
+=== puma shutdown: 2018-02-07 16:36:30 -0500 ===
+- Goodbye!
+Exiting
+cabox@box-codeanywhere:~/workspace/depot$

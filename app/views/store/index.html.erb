@@ -1,0 +1,28 @@
+<h1>Store#index</h1>
+<p>Find me in app/views/store/index.html.erb</p>
+
+<table class="w3-table-all">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Image url</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><h4><%= product.title %></h4></td>
+        <td width="50%"><%= sanitize(strip_tags(product.description)) %></td>
+        <td><%= image_tag(product.image_url) %></td>
+        <td>
+          <%= number_to_currency(product.price) %>
+          <hr />
+          <%= link_to 'Add to Cart', product , class:"w3-button w3-light-gray w3-border w3-border-blue" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,0 +1,59 @@
+Agile Development Depot Application
+
+Chapter 7 - Testing and Validation - Iteration B
+
+Controller Test - Built-in
+
+found in: ...test/controllers/...
+
+Add data validations to the product model class to result in for product.rb:
+
+class Product < ActiveRecord::Base
+  validates :title, :description, :image_url, presence: true
+  validates :price, numericality: {greater_than_or_equal_to: 0.01}
+  validates :title, uniqueness: true
+  validates :image_url, allow_blank: true, format: {
+    with:    %r{\.(gif|jpg|png)\Z}i,
+    message: 'must be a URL for GIF, JPG or PNG image.'
+  }
+end
+
+now, test:
+
+depot> rake test
+
+expect failure as valid test data missing...
+add test data to the controller test file: products_controller_test.rb
+
+depot> rake test 
+
+OK!
+
+
+Unit Test - Validation Example - Test a data 'unit'
+
+test is found and named as: ...test/models/...
+
+can be self contained in ...test/models/product_test.rb
+
+test with:
+
+depot> rake test:models
+
+make assertions, manage test data, all within the product_test.rb file
+
+
+Test Fixtures
+
+fixtures found in ...test/fixtures/...
+
+are YAML format named like .../test/fixtures/products.yml 
+
+and contain named cases that can be called from within test scripts
+
+
+More git
+
+depot> git status
+
+depot> git commit -a -m "new label"

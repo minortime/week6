@@ -1,0 +1,40 @@
+depot> rails generate scaffold Product title:string description:text image_url:string price:decimal
+
+depot> rails generate controller Store index
+
+   now, insert into the .../app/config/routes.rb file a new root route like:
+   root 'store#index'
+   comment out any other root records by putting the # tag before like
+   #root 'products#index'
+   check navigation in application.html.erb
+	
+   to list all products in the store index page, we need to set up data statement in Store controller index method.
+   in the .../app/controllers/store_controller.rb file add
+	@products = Product.order(:title)
+   between the def index & end statements
+   
+   now, copy the product display statements we already have in the .../app/views/product/index.html.erb 
+   insert these into the similar section of the (mostly blank) .../app/views/store/index.html.erb
+    
+download images and database seed file from within depot_a application in rails51 code archive
+
+images copied into .../app/assets/images/
+seeds.rb from rails51 archive overwrites file with same name in .../db/
+
+apply rails helpers inside views:
+
+strip_tags( )
+sanitize( )
+image_tag( )
+number_to_currency( )
+
+depot> rails db:migrate
+
+depot> rails db:seed
+
+depot> rails s -b 0.0.0.0 -p 3000
+
+optional(will cover more in week7 lab)
+
+depot> rails test
+

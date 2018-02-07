@@ -1,0 +1,132 @@
+A. Creating a Store display page at store#index
+
+1. create a Store controller
+	...$ rails generate controller Store index
+
+2. now, insert into the .../app/config/routes.rb file a new root route like:
+	root 'store#index'
+   comment out any other root records by putting the # tag before like
+	#root 'products#index'
+
+3. run C9 server to test
+	...$ rails s -b $IP -p $PORT
+	
+4. to list all products in the store index page, we need to set up data statement in Store controller index method.
+   in the .../app/controllers/store_controller.rb file add
+	@products = Product.order(:title)
+   between the def index & end statements
+
+5. now, copy the product display statements we already have in the .../app/views/product/index.html.erb 
+   insert these into the similar section of the (mostly blank) .../app/views/store/index.html.erb
+
+6. test again and you should see a bootstrapped store#index page showing the three seeded items
+	migration error would generally mean you didn't migrate the db
+	migrate and seed use ...$ rails db:migrate and the ...$ rails db:seed
+	
+7. use a helper to format the price in .../app/views/store/index.html.erb as a currency like 
+	number_to_currency(product.price)
+	
+   	note: other helpers we use include: strip_tags() and image_tag() and sanitize()
+
+
+B. Creating a Cart and LineItem objects for session-level shopping
+
+1. create the Cart
+	...$ rails generate scaffold Cart
+	
+   scaffolding creates a model, so run the migration
+	...$ rails db:migrate
+	
+2. create the new file .../app/controllers/concerns/current_cart.rb with contents
+
+	module CurrentCart
+	
+	  private
+	
+	    def set_cart 
+	      @cart = Cart.find(session[:cart_id])
+	    rescue ActiveRecord::RecordNotFound
+	      @cart = Cart.create
+	      session[:cart_id] = @cart.id
+	    end
+	end
+
+   this will be how  we test for the presence or absence of a shopping cart
+
+3. generate by scaffold the LineItems entity that will hold cart purchase information
+
+	...$ rails generate scaffold LineItem product:references cart:belongs_to
+	
+   then migrate the new database table
+	...$ rails db:migrate
+	
+4. add one line into the .../app/models/cart.rb between the Class Cart < ApplicationRecord & end 
+	has_many :line_items, dependent: :destroy
+   this will let us use object calls like: {cart.line_items.count}
+
+
+5. modify the .../app/models/product.rb file by including two lines after: class Product < ApplicationRecord
+
+   class Product < ApplicationRecord
+     
+     has_many :line_items
+     before_destroy :ensure_not_referenced_by_any_line_item
+   
+   then, just before final end statement, you add a private method to test if you can delete an existing product
+   this helps enforce referential integrity
+   
+   
+     private
+     # ensure that there are no line items referencing this product
+       def ensure_not_referenced_by_any_line_item
+        unless line_items.empty?
+         errors.add(:base, 'Line Items present')
+        throw :abort
+        end
+       end
+       
+     end  (Note: this is the pre-existing end statement lin in the product.rb file
+
+
+6. add a button to support Add_To_Cart function in .../app/views/store/index.html.erb
+	<%= button_to 'Add to Cart', line_items_path(product_id: product) %>
+   place immediately after the product.price entry on the page
+
+
+7. modify .../app/controllers/line_items_controller.rb to use the CurrentCart concern we created and determine when it is used.
+   A. Add the following two line below the initial: class LineItemsController .... line
+	include CurrentCart
+	before_action :set_cart, only: [:create]
+	
+   B. further into the line_items_controller.rb file we need to modify the method: def create so we can use the current 
+      selected product_id to find product data for the line items; insert a line immediately after: def create and add
+	product = Product.find(params[:product_id])
+	@line_item = @cart.line_items.build(product: product)
+      then just after the line: if @line_item.save the line starting with: format.html ... should be changed to be:
+	format.html { redirect_to @line_item.cart, notice: 'Line item was successfully created.' }
+      this results in a message being shown by the .../app/views/carts/show.html.erb page fragment
+
+   C. test now if you wish
+
+8. To see some details like the title in the show result, we need to add an iteration through all of the cart items.
+   To display as text or even within a panel body section we need to add for title displays:
+	<ul>
+	  <% @cart.line_items.each do |item| %>
+	    <li><%= item.product.title %></li>
+	  <% end %>
+	</ul>
+   it would be possible to add other information like <%= item.product.price %> to the display if interested  
+
+9. test again if you wish
+
+10.final steps - assuming you have viable github and heroku remotes
+	test everything you can to make sure it works
+	update local repository (e.g. ...$ git add -A and ...$ git commit -m "update"
+        push to github (e.g. ...$ git push origin master)	
+	   check and see update at github
+	push to heroku (e.g. ...$ git push heroku master)
+	   before testing at heroku remember database migrations and seeding
+	      ...$ heroku run rails db:migrate
+	      ...$ heroku run rails db:seed
+	      
+	      

@@ -12,9 +12,9 @@
   <tbody>
     <% @carts.each do |cart| %>
       <tr>
-        <td><%= link_to 'Show', cart , class:"w3-button w3-light-gray w3-border" %></td>
-        <td><%= link_to 'Edit', edit_cart_path(cart) , class:"w3-button w3-light-gray w3-border" %></td>
-        <td><%= link_to 'Destroy', cart, method: :delete, data: { confirm: 'Are you sure?' } , class:"w3-button w3-light-gray w3-border" %></td>
+        <td><%= link_to 'Show', cart , class:"w3-button w3-light-gray" %></td>
+        <td><%= link_to 'Edit', edit_cart_path(cart) , class:"w3-button w3-light-gray" %></td>
+        <td><%= link_to 'Destroy', cart, method: :delete, data: { confirm: 'Are you sure?' } , class:"w3-button w3-light-gray" %></td>
       </tr>
     <% end %>
   </tbody>

@@ -18,6 +18,13 @@
 </tr>
 <% end %>
 
+<ul>
+    <% @cart.line_items.each do |item| %>
+    <li><%= item.quantity %> &times; <%= item.product.title %></li>
+  <% end %>
+</ul>
+  
+  
 <tr>
 <td>
 <%= link_to 'Edit', edit_cart_path(@cart) ,class:"w3-button w3-light-gray w3-border" %> 
@@ -29,7 +36,7 @@
 </tbody>
 </table>
 </div>
-
+<%= link_to 'Keep Shopping', store_index_url , class:"w3-button w3-blue w3-border" %>
 
 
 

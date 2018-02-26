@@ -1,6 +1,6 @@
 <p id="notice" class="w3-panel"><%= notice %></p>
 
-<div class="w3-panel w3-aqua">
+<div class="w3-panel w3-light-blue">
 
 <table class="w3-table-all">
 <thead>
@@ -11,20 +11,12 @@
 </thead>
 <tbody>
   
-<div class="panel-body">
- <table class="table table-responsive">
-    
-   <ul>
-    <% @cart.line_items.each do |item| %>
-    <li><%= item.quantity %> &times; <%= item.product.title %></li>
-  <% end %>
-</ul>
-   
-    <tr>
-    <td colspan="2">Total Order Value </td><td><%= number_to_currency(@cart.total_price) %></td>
-    </tr>
- </table>
-</div>
+<% @cart.line_items.each do |item| %>  
+<tr>
+  <td><%= item.product.title %></td>
+  <td><%= item.product.price %></td>
+</tr>
+<% end %>
 
 <tr>
 <td>
@@ -32,12 +24,6 @@
 </td>
 <td>
 <%= link_to 'Back', carts_path , class:"w3-button w3-light-gray w3-border" %>
-</td>
-  <td>
-<%= button_to 'Empty cart', @cart, method: :delete, data: { confirm: 'Are you sure?' } %>
-</td>
-  <td>
-<%= link_to 'Keep Shopping', store_index_url , class:"btn btn-primary" %>
 </td>
 </tr>
 </tbody>

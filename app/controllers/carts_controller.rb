@@ -1,6 +1,9 @@
 class CartsController < ApplicationController
+  skip_before_action :authorize
+  # skip_before_action :authorize, only: [:show, :create, :destroy]
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
-rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
+  rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
+  
   # GET /carts
   # GET /carts.json
   def index
@@ -18,8 +21,8 @@ rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
   end
 
   # GET /carts/1/edit
-  def edit
-  end
+  #def edit
+  #end
 
   # POST /carts
   # POST /carts.json
@@ -51,8 +54,16 @@ rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
     end
   end
 
- # DELETE /carts/1
+  # DELETE /carts/1
   # DELETE /carts/1.json
+  #def destroy
+  #  @cart.destroy
+  #  respond_to do |format|
+  #    format.html { redirect_to carts_url, notice: 'Cart was successfully destroyed.' }
+  #    format.json { head :no_content }
+  #  end
+  #end
+  
   def destroy
     @cart.destroy if @cart.id == session[:cart_id]
     session[:cart_id] = nil
@@ -62,6 +73,7 @@ rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
       format.json { head :no_content }
     end
   end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -75,6 +87,7 @@ rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
     end
     def invalid_cart
       logger.error "Attempt to access invalid cart #{params[:id]}"
-      redirect_to store_index_url, notice: 'Invalid cart'
+      redirect_to store_index_url, notice: "Invalid cart"
     end
+
 end

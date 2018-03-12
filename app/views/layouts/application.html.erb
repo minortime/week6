@@ -15,13 +15,21 @@
       <a href="/" class="w3-bar-item w3-button w3-border">
         <%= image_tag 'mad-icon.png', alt: 'The Mad Icon', height: '28', width: '28', style: 'display: block; margin-left: auto; margin-right: auto; margin-bottom: none; margin-top: none' %></a>
       <a href="/static_pages/home" class="w3-bar-item w3-button w3-blue w3-border">Home</a>
-      <a href="/" class="w3-bar-item w3-button w3-border">Store</a>
+      <a href="/" class="w3-bar-item w3-button w3-blue w3-border">Store</a>
       <a href="/static_pages/help" class="w3-bar-item w3-button w3-blue w3-border">Help</a>
       <a href="/static_pages/about" class="w3-bar-item w3-button w3-blue w3-border">About</a>
-      <a href="/products" class="w3-bar-item w3-button w3-blue w3-border">Products</a>
+<%= link_to 'Login', login_path, method: :post, class:"w3-bar-item w3-button w3-border"  %>
+<% if session[:user_id] %>
+
+<%= link_to 'Orders', orders_path, class:"w3-bar-item w3-button w3-blue w3-border" %>
+<%= link_to 'Products', products_path, class:"w3-bar-item w3-button w3-blue w3-border"  %>
+<%= link_to 'Users', users_path, class:"w3-bar-item w3-button w3-blue w3-border"  %>
       <a href="/carts" class="w3-bar-item w3-button w3-red w3-border">Carts</a>      
-      <a href="/line_items" class="w3-bar-item w3-button w3-blue w3-border">LineItems</a>      
-    </div>
+      <a href="/line_items" class="w3-bar-item w3-button w3-blue w3-border">LineItems</a>    
+<%= link_to 'Logout', logout_path, method: :delete, class:"w3-bar-item w3-button w3-border"  %>
+<% end %>
+
+   </div>
 
    <div class="w3-container">
     <%= yield %>
